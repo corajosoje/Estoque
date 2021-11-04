@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="logPath">log</Property>
+        <Property name="rollingFileName">ECredAc</Property>
+        <Property name="AppenderPadrao">Console</Property>   
+        <Property name="LevelPadrao">DEBUG</Property>   
+    </Properties>
+  
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        
+        <RollingFile name="rollingFile" filePattern="${logPath}/${rollingFileName}_%d{yyyy-MM-dd}.log">
+            
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <!-- Causes a rollover if the log file is older than the current JVM's start time -->
+                <OnStartupTriggeringPolicy />
+                <!-- Causes a rollover once the date/time pattern no longer applies to the active file -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    
+    <Loggers>
+               
+        <Logger name="br.com.jefferson.ecredac.frame.registro.FS0000" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <Logger name="br.com.jefferson.ecredac.frame.cadastro.FMunicipio" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <Logger name="br.com.jefferson.ecredac.frame.cadastro.FCliente" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <Logger name="br.com.jefferson.ecredac.frame.cadastro.FDocumento" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <Logger name="br.com.jefferson.ecredac.frame.cadastro.F0300" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <Logger name="br.com.jefferson.ecredac.frame.cadastro.FTerceiro" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <Logger name="br.com.jefferson.ecredac.frame.simplificada.Declaracao" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        
+        <Logger name="br.com.jefferson.ecredac.txt.simplificada.TxtSimplificado" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        
+        <Logger name="br.com.jefferson.ecredac.frame.Main" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <Logger name="LoggerTest" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="INFO" additivity="true">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Root>
+    </Loggers>
+</Configuration>
