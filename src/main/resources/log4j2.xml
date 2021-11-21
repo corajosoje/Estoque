@@ -2,7 +2,7 @@
 <Configuration status="WARN" monitorInterval="30">
     <Properties>
         <Property name="logPath">log</Property>
-        <Property name="rollingFileName">ECredAc</Property>
+        <Property name="rollingFileName">Estoque</Property>
         <Property name="AppenderPadrao">Console</Property>   
         <Property name="LevelPadrao">DEBUG</Property>   
     </Properties>
@@ -25,41 +25,18 @@
     </Appenders>
     
     <Loggers>
-               
-        <Logger name="br.com.jefferson.ecredac.frame.registro.FS0000" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
-        <Logger name="br.com.jefferson.ecredac.frame.cadastro.FMunicipio" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
-        <Logger name="br.com.jefferson.ecredac.frame.cadastro.FCliente" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
-        <Logger name="br.com.jefferson.ecredac.frame.cadastro.FDocumento" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
-        <Logger name="br.com.jefferson.ecredac.frame.cadastro.F0300" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
-        <Logger name="br.com.jefferson.ecredac.frame.cadastro.FTerceiro" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
-        <Logger name="br.com.jefferson.ecredac.frame.simplificada.Declaracao" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
-        
-        <Logger name="br.com.jefferson.ecredac.txt.simplificada.TxtSimplificado" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
-        
-        <Logger name="br.com.jefferson.ecredac.frame.Main" level="${LevelPadrao}" additivity="false">
-            <AppenderRef ref="${AppenderPadrao}"/>
-        </Logger>
         <Logger name="LoggerTest" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="INFO" additivity="true">
             <AppenderRef ref="${AppenderPadrao}"/>
         </Root>
+        
+          
+        <Logger name="br.com.jefferson.estoque.frame.Cliente" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+               
+        
     </Loggers>
 </Configuration>
