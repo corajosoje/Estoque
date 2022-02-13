@@ -1,6 +1,6 @@
 package br.com.jefferson.estoque.frame;
 
-import br.com.jefferson.estoque.model.Cliente;
+import br.com.jefferson.estoque.model.reg.Cliente;
 import br.com.jefferson.estoque.model.dao.DaoInterface;
 import br.com.jefferson.estoque.model.util.ObjectFactory;
 import br.jefferson.exeptions.DaoException;

@@ -1,9 +1,15 @@
-package br.com.jefferson.estoque.model;
+package br.com.jefferson.estoque.model.doc;
 
+import br.com.jefferson.estoque.model.reg.Cliente;
+import br.com.jefferson.estoque.model.doc.item.Itens;
+import br.com.jefferson.estoque.model.Persistable;
+import br.com.jefferson.estoque.model.Registros;
+import br.com.jefferson.estoque.model.reg.Terceiro;
 import br.com.jefferson.estoque.model.util.Tipo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
@@ -16,11 +22,11 @@ import javax.persistence.TemporalType;
  *
  * @author jeffe
  */
-//@Entity
-public class Documento implements Registros, Serializable, Persistable {
+@Entity
+public class NotaFiscal implements Registros, Serializable, Persistable {
 
     @Id
-    private Integer numero;
+    private String chave;
 
     @Temporal(TemporalType.DATE)
     private LocalDate dataMovimento;
@@ -45,12 +51,12 @@ public class Documento implements Registros, Serializable, Persistable {
         this.cliente = cliente;
     }
 
-    public Integer getId() {
-        return numero;
+    public String getChave() {
+        return chave;
     }
 
-    public void setId(Integer numero) {
-        this.numero = numero;
+    public void setChave(String chave) {
+        this.chave = chave;
     }
 
     @Override
@@ -88,4 +94,5 @@ public class Documento implements Registros, Serializable, Persistable {
     public void setItens(List<Itens> itens) {
         this.itens = itens;
     }
+
 }

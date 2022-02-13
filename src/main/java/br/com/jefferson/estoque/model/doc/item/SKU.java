@@ -1,6 +1,7 @@
 
-package br.com.jefferson.estoque.model;
+package br.com.jefferson.estoque.model.doc.item;
 
+import br.com.jefferson.estoque.model.Persistable;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -1,11 +1,13 @@
-package br.com.jefferson.estoque.model;
+package br.com.jefferson.estoque.model.reg;
 
+import br.com.jefferson.estoque.model.Persistable;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- *
+ *  Regstro de terceito
+ * 
  * @author jeffe
  */
 @Entity

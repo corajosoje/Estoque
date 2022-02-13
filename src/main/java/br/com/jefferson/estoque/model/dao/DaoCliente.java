@@ -1,11 +1,9 @@
 package br.com.jefferson.estoque.model.dao;
 
-import br.com.jefferson.estoque.model.Cliente;
+import br.com.jefferson.estoque.model.reg.Cliente;
 import br.com.jefferson.estoque.model.Persistable;
 import br.jefferson.exeptions.DaoException;
 import java.lang.reflect.Field;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
 /**

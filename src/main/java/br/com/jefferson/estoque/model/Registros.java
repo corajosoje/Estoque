@@ -1,5 +1,8 @@
 package br.com.jefferson.estoque.model;
 
+import br.com.jefferson.estoque.model.reg.Terceiro;
+import br.com.jefferson.estoque.model.doc.item.Itens;
+import br.com.jefferson.estoque.model.reg.Cliente;
 import br.com.jefferson.estoque.model.util.Tipo;
 import java.time.LocalDate;
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.List;
  */
 public interface Registros {
 
+    public Cliente getCliente();
 
     public LocalDate getDataMovimento();
 

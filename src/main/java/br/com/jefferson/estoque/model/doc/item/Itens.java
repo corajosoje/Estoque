@@ -1,5 +1,7 @@
-package br.com.jefferson.estoque.model;
+package br.com.jefferson.estoque.model.doc.item;
 
+import br.com.jefferson.estoque.model.Persistable;
+import br.com.jefferson.estoque.model.Registros;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,8 +23,6 @@ public class Itens implements Serializable, Persistable {
     @ManyToOne
     private SKU sku;
 
-    @ManyToOne
-    private Registros registro;
     private Double quantidade;
     private Double icms;
     private Double ipi;
@@ -45,14 +45,6 @@ public class Itens implements Serializable, Persistable {
 
     public void setSku(SKU sku) {
         this.sku = sku;
-    }
-
-    public Registros getRegistro() {
-        return registro;
-    }
-
-    public void setRegistro(Registros registro) {
-        this.registro = registro;
     }
 
     public Double getQuantidade() {
