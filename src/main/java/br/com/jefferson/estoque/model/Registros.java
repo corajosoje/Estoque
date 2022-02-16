@@ -1,6 +1,6 @@
 package br.com.jefferson.estoque.model;
 
-import br.com.jefferson.estoque.model.reg.Terceiro;
+import br.com.jefferson.estoque.model.doc.IdDoc;
 import br.com.jefferson.estoque.model.doc.item.Itens;
 import br.com.jefferson.estoque.model.reg.Cliente;
 import br.com.jefferson.estoque.model.util.Tipo;
@@ -19,7 +19,7 @@ public interface Registros {
 
     public Tipo getTipo();
 
-    public Terceiro getTerceiro();
+    public IdDoc getIdDoc();
 
     public List<Itens> getItens();
 }

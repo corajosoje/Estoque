@@ -2,6 +2,7 @@ package br.com.jefferson.estoque.model.doc.item;
 
 import br.com.jefferson.estoque.model.Persistable;
 import br.com.jefferson.estoque.model.Registros;
+import br.jefferson.exeptions.DaoException;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -103,4 +104,8 @@ public class Itens implements Serializable, Persistable {
         this.custo = custo;
     }
 
+    @Override
+    public void validade() throws DaoException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

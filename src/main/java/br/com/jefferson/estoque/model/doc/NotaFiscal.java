@@ -6,9 +6,11 @@ import br.com.jefferson.estoque.model.Persistable;
 import br.com.jefferson.estoque.model.Registros;
 import br.com.jefferson.estoque.model.reg.Terceiro;
 import br.com.jefferson.estoque.model.util.Tipo;
+import br.jefferson.exeptions.DaoException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,6 +28,9 @@ import javax.persistence.TemporalType;
 public class NotaFiscal implements Registros, Serializable, Persistable {
 
     @Id
+    private IdDoc idDoc;
+
+    @Column(length = 44)
     private String chave;
 
     @Temporal(TemporalType.DATE)
@@ -33,9 +38,6 @@ public class NotaFiscal implements Registros, Serializable, Persistable {
 
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
-
-    @OneToOne
-    private Terceiro terceiro;
 
     @OneToMany
     private List<Itens> itens;
@@ -78,12 +80,12 @@ public class NotaFiscal implements Registros, Serializable, Persistable {
     }
 
     @Override
-    public Terceiro getTerceiro() {
-        return terceiro;
+    public IdDoc getIdDoc() {
+        return idDoc;
     }
 
-    public void setTerceiro(Terceiro terceiro) {
-        this.terceiro = terceiro;
+    public void setIdDoc(IdDoc idDoc) {
+        this.idDoc = idDoc;
     }
 
     @Override
@@ -95,4 +97,8 @@ public class NotaFiscal implements Registros, Serializable, Persistable {
         this.itens = itens;
     }
 
+    @Override
+    public void validade() throws DaoException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

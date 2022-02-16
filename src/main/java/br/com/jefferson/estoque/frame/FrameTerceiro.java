@@ -1,17 +1,29 @@
-
 package br.com.jefferson.estoque.frame;
+
+import br.com.jefferson.estoque.model.dao.DaoTerceiro;
+import br.com.jefferson.estoque.model.reg.Terceiro;
+import br.com.jefferson.estoque.util.ObjectFactory;
+import br.com.jefferson.estoque.util.Utilidades;
+import br.jefferson.exeptions.DaoException;
+import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author jeffe
  */
-public class Terceiro extends javax.swing.JFrame {
+public class FrameTerceiro extends javax.swing.JFrame {
+
+    private static DaoTerceiro dao;
+    Logger log = ObjectFactory.getLogger(this);
 
     /**
      * Creates new form Terceiro
      */
-    public Terceiro() {
+    public FrameTerceiro() {
         initComponents();
+        dao = ObjectFactory.DaoTerceiro;
     }
 
     /**
@@ -33,6 +45,11 @@ public class Terceiro extends javax.swing.JFrame {
         setTitle("Cadastro de Terceiros");
 
         jButton1.setText("Salvar / Atualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextField1.setToolTipText("Razão Social");
 
@@ -78,7 +95,41 @@ public class Terceiro extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        log.trace("Iniciando processo de persistencia de terceiro");
+        EntityManager manager = null;
+        try {
+            log.debug("Validando se os campos estão preenchidos");
+            if (Utilidades.verificaPreenchimento(jTextField1, jTextField2)) {
+                log.debug("Iniciando criação do objeto");
+                manager = ObjectFactory.getNewManager();
+
+                Terceiro terceiro = new Terceiro();
+                terceiro.setCpf_cnpj(jTextField1.getText());
+                terceiro.setNome(jTextField1.getText());
+
+                log.debug("Persistindo o objeto");
+                dao.persist(terceiro, manager);
+
+                manager.getTransaction().commit();
+
+            } else {
+                log.error("Os campos não estão preenchidos");
+                throw new DaoException("Todos os campos são obrigatórios");
+            }
+        } catch (DaoException ex) {
+             log.error("Erro ao persistir", ex);
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Cadastro de Terceiros", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            log.debug("Finalizando o Manager");
+            if (manager != null) {
+                manager.close();
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -97,20 +148,21 @@ public class Terceiro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Terceiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameTerceiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Terceiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameTerceiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Terceiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameTerceiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Terceiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameTerceiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Terceiro().setVisible(true);
+                new FrameTerceiro().setVisible(true);
             }
         });
     }

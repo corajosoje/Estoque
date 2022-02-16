@@ -1,25 +1,29 @@
+
 package br.com.jefferson.estoque.frame;
 
-import br.com.jefferson.estoque.model.reg.Cliente;
-import br.com.jefferson.estoque.model.dao.DaoCliente;
+import br.com.jefferson.estoque.model.dao.DaoSku;
+import br.com.jefferson.estoque.model.doc.item.SKU;
 import br.com.jefferson.estoque.util.ObjectFactory;
 import br.com.jefferson.estoque.util.Utilidades;
 import br.jefferson.exeptions.DaoException;
-import org.apache.logging.log4j.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
- * @author jeffe
+ * @author 88717
  */
-public class FrameCliente extends javax.swing.JFrame {
+public class FrameSKU extends javax.swing.JFrame {
 
-    private final Logger log = ObjectFactory.getLogger(this);
-    private final DaoCliente dao = ObjectFactory.DaoCliente;
-
-    public FrameCliente() {
+    private static DaoSku dao;
+    Logger log = ObjectFactory.getLogger(this);
+    /**
+     * Creates new form FrameSKU
+     */
+    public FrameSKU() {
         initComponents();
+        dao = ObjectFactory.DaoSku;
     }
 
     /**
@@ -34,30 +38,28 @@ public class FrameCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Clientes");
+        setTitle("Cadastro de SKU");
 
-        jLabel1.setText("CNPJ: ");
+        jLabel1.setText("Código:");
 
-        jLabel2.setText("Nome: ");
+        jLabel2.setText("Descirção: ");
 
-        jTextField1.setToolTipText("Razão Social");
+        jLabel3.setText("NCM ");
 
-        try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jButton1.setText("Salvar / Atualizar");
+        jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jTextField3.setToolTipText("Somente Numeros");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,19 +67,22 @@ public class FrameCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField3))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -86,13 +91,14 @@ public class FrameCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -101,20 +107,22 @@ public class FrameCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        log.trace("Iniciando processo de persistencia de terceiro");
+        // TODO add your handling code here:
+                log.trace("Iniciando processo de persistencia de terceiro");
         EntityManager manager = null;
         try {
             log.debug("Validando se os campos estão preenchidos");
-            if (Utilidades.verificaPreenchimento(jTextField1, jFormattedTextField1)) {
+            if (Utilidades.verificaPreenchimento(jTextField1, jTextField2)) {
                 log.debug("Iniciando criação do objeto");
                 manager = ObjectFactory.getNewManager();
 
-                Cliente cliente = new Cliente();
-                cliente.setCpf_cnpj(jFormattedTextField1.getText());
-                cliente.setNome(jTextField1.getText());
+                SKU sku = new SKU();
+                sku.setCodigo(jTextField1.getText());
+                sku.setDescricao(jTextField2.getText());
+                sku.setNcm(jTextField3.getText());
 
                 log.debug("Persistindo o objeto");
-                dao.persist(cliente, manager);
+                dao.persist(sku, manager);
 
                 manager.getTransaction().commit();
 
@@ -123,8 +131,8 @@ public class FrameCliente extends javax.swing.JFrame {
                 throw new DaoException("Todos os campos são obrigatórios");
             }
         } catch (DaoException ex) {
-            log.error("Erro ao persistir", ex);
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Cadastro de Clientes", JOptionPane.ERROR_MESSAGE);
+             log.error("Erro ao persistir", ex);
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Cadastro de Terceiros", JOptionPane.ERROR_MESSAGE);
         } finally {
             log.debug("Finalizando o Manager");
             if (manager != null) {
@@ -150,30 +158,31 @@ public class FrameCliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameSKU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameSKU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameSKU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameSKU.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameCliente().setVisible(true);
+                new FrameSKU().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

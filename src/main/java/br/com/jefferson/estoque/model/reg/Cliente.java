@@ -1,6 +1,8 @@
 package br.com.jefferson.estoque.model.reg;
 
 import br.com.jefferson.estoque.model.Persistable;
+import br.jefferson.exeptions.DaoException;
+import br.jefferson.util.Util;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,5 +34,15 @@ public class Cliente implements Serializable, Persistable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public void validade() throws DaoException {
+        if (Util.isNullOrBlank(getNome())) {
+            throw new DaoException("Campo Nome é obrigatório");
+        }
+        if (Util.isNullOrBlank(getCpf_cnpj())) {
+            throw new DaoException("Campo CNPJ-CPF é obrigatório");
+        }
     }
 }

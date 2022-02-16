@@ -4,9 +4,16 @@
  */
 package br.com.jefferson.estoque.frame;
 
+import br.com.jefferson.estoque.model.doc.Documento;
 import br.com.jefferson.estoque.model.doc.item.Itens;
+import br.com.jefferson.estoque.model.doc.item.SKU;
+import br.com.jefferson.estoque.model.util.JPAConfiguration;
+import br.com.jefferson.estoque.util.ObjectFactory;
 import br.com.jefferson.estoque.util.Utilidades;
+import br.jefferson.exeptions.DaoException;
+import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -14,9 +21,13 @@ import javax.swing.JOptionPane;
  */
 public class Movimentacao extends javax.swing.JFrame {
 
+    Logger log = ObjectFactory.getLogger(this);
+
     /**
      * Creates new form Movimentacao
      */
+    private EntityManager manager;
+
     public Movimentacao() {
         initComponents();
     }
@@ -30,6 +41,7 @@ public class Movimentacao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tblItens1 = new br.com.jefferson.estoque.model.tabelas.tblItens();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
@@ -94,6 +106,7 @@ public class Movimentacao extends javax.swing.JFrame {
         jLabel5.setText("Quantidade: ");
 
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jFormattedTextField2.setToolTipText("");
 
         jLabel6.setText("ICMS Total: ");
 
@@ -111,17 +124,7 @@ public class Movimentacao extends javax.swing.JFrame {
 
         jFormattedTextField6.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTable1.setModel(tblItens1);
         jScrollPane1.setViewportView(jTable1);
 
         jFormattedTextField7.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
@@ -143,6 +146,11 @@ public class Movimentacao extends javax.swing.JFrame {
         jLabel10.setText("Serie do Documento: ");
 
         jButton2.setText("Registrar / Atualizar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -294,15 +302,37 @@ public class Movimentacao extends javax.swing.JFrame {
         if (Utilidades.verificaPreenchimento(jTextField4, jFormattedTextField2, jFormattedTextField3, jFormattedTextField4,
                 jFormattedTextField5, jFormattedTextField6, jFormattedTextField7, jFormattedTextField9)) {
             try {
+                log.debug("Construindo Item");
                 Itens item = new Itens();
-                //TODO Parei aqui
-            } finally {
 
+                item.setCofins(Double.parseDouble(jFormattedTextField7.getText()));
+                item.setCusto(Double.parseDouble(jFormattedTextField6.getText()));
+                item.setIcms(Double.parseDouble(jFormattedTextField3.getText()));
+                item.setIpi(Double.parseDouble(jFormattedTextField5.getText()));
+                item.setNumero(ERROR);
+                item.setPis(Double.parseDouble(jFormattedTextField9.getText()));
+                item.setQuantidade(Double.parseDouble(jFormattedTextField2.getText()));
+                item.setSt(Double.parseDouble(jFormattedTextField4.getText()));
+                item.setSku(JPAConfiguration.getTransientObject(SKU.class, jTextField4.getText()));
+
+                tblItens1.addRow(item);
+            } catch (DaoException ex) {
+                JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage(), "Problemas ao puxar SKU", JOptionPane.INFORMATION_MESSAGE);
+            } finally {
+                log.debug("Finalizado");
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Campo obrigatório não preenchido", "Inserir Item", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO parei aqui
+        log.debug("Construindo Documento");
+
+        Documento doc = new Documento();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,5 +406,6 @@ public class Movimentacao extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private br.com.jefferson.estoque.model.tabelas.tblItens tblItens1;
     // End of variables declaration//GEN-END:variables
 }

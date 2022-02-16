@@ -33,10 +33,17 @@
         </Root>
         
           
-        <Logger name="br.com.jefferson.estoque.frame.Cliente" level="${LevelPadrao}" additivity="false">
+        <Logger name="br.com.jefferson.estoque.frame.FrameCliente" level="${LevelPadrao}" additivity="false">
             <AppenderRef ref="${AppenderPadrao}"/>
         </Logger>
-               
-        
+        <Logger name="br.com.jefferson.estoque.frame.FrameTerceiro" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <Logger name="br.com.jefferson.estoque.frame.FrameSKU" level="${LevelPadrao}" additivity="false">
+            <AppenderRef ref="${AppenderPadrao}"/>
+        </Logger>
+        <!--
+        log.debug("");
+        -->
     </Loggers>
 </Configuration>

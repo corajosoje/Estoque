@@ -13,27 +13,33 @@ import javax.persistence.EntityManager;
 public class DaoCliente implements DaoInterface {
 
     @Override
-    public Persistable persist(Persistable object, EntityManager manager) throws DaoException {
+    public Persistable persist(Persistable persistable, EntityManager manager) throws DaoException {
         try {
-            //TODO Implementar validações
 
-            Object id = getID(object);
+            persistable.validade();
+
+            if (!manager.getTransaction().isActive()) {
+                manager.getTransaction().begin();
+            }
+
+            Object id = getID(persistable);
+
             if (id == null) {
-                throw new DaoException("ID do objeto Nulo");
-            }
-
-            Cliente find = manager.find(Cliente.class, id);
-            if (find == null) {
-                manager.persist(object);
-                return object;
+                manager.persist(persistable);
+                return persistable;
             } else {
-                return manager.merge(object);
+                Cliente find = manager.find(Cliente.class, id);
+                if (find == null) {
+                    manager.persist(persistable);
+                } else {
+                    return manager.merge(persistable);
+                }
             }
 
-        } catch (IllegalArgumentException | IllegalAccessException ex) {
+        } catch (IllegalArgumentException | IllegalAccessException | UnsupportedOperationException ex) {
             new DaoException(ex);
         }
-        throw new DaoException("Retorno improvavel ao persistir");
+        throw new DaoException("Problema ao persistir");
     }
 
     public Object getID(Object obj) throws IllegalArgumentException, IllegalAccessException, DaoException {

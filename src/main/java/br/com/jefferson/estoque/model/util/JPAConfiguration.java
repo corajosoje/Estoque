@@ -5,6 +5,7 @@
  */
 package br.com.jefferson.estoque.model.util;
 
+import br.com.jefferson.estoque.util.ObjectFactory;
 import br.jefferson.exeptions.DaoException;
 import br.jefferson.util.LeitorProperties;
 import java.util.HashMap;
@@ -62,18 +63,27 @@ public class JPAConfiguration {
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL55Dialect");
         properties.put("javax.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
         properties.put("javax.persistence.jdbc.url", "jdbc:mysql://" + IP + ":"
-               + PORTA + "/" + BANCO + "?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true");
+                + PORTA + "/" + BANCO + "?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true");
         properties.put("javax.persistence.jdbc.user", USER);
         properties.put("javax.persistence.jdbc.password", SENHA);
         properties.put("hibernate.connection.useSSL", "false");
         properties.put("hibernate.connection.serverTimezone", "UTC");
         //properties.put("openjpa.MetaDataFactory", "jpa(Types=" + classNames + ")");
 
-       properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.hbm2ddl.auto", "update");
-       emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT, properties);
+        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT, properties);
         return emf;
 
     }
 
+    public static <T> T getTransientObject(Class<T> classe, Object id) throws DaoException {
+        EntityManager manager = null;
+        try {
+            manager = getEntityManager();
+            return manager.find(classe, id);
+        } finally {
+            manager.close();
+        }
+    }
 }

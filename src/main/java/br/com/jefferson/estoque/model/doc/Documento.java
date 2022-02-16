@@ -6,9 +6,11 @@ import br.com.jefferson.estoque.model.Persistable;
 import br.com.jefferson.estoque.model.Registros;
 import br.com.jefferson.estoque.model.reg.Terceiro;
 import br.com.jefferson.estoque.model.util.Tipo;
+import br.jefferson.exeptions.DaoException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
@@ -21,20 +23,17 @@ import javax.persistence.TemporalType;
  *
  * @author jeffe
  */
-//@Entity
+@Entity
 public class Documento implements Registros, Serializable, Persistable {
 
     @Id
-    private Integer numero;
+    private IdDoc idDoc;
 
     @Temporal(TemporalType.DATE)
     private LocalDate dataMovimento;
 
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
-
-    @OneToOne
-    private Terceiro terceiro;
 
     @OneToOne
     private Cliente cliente;
@@ -50,12 +49,13 @@ public class Documento implements Registros, Serializable, Persistable {
         this.cliente = cliente;
     }
 
-    public Integer getId() {
-        return numero;
+    @Override
+    public IdDoc getIdDoc() {
+        return idDoc;
     }
 
-    public void setId(Integer numero) {
-        this.numero = numero;
+    public void setIdDoc(IdDoc idDoc) {
+        this.idDoc = idDoc;
     }
 
     @Override
@@ -77,20 +77,16 @@ public class Documento implements Registros, Serializable, Persistable {
     }
 
     @Override
-    public Terceiro getTerceiro() {
-        return terceiro;
-    }
-
-    public void setTerceiro(Terceiro terceiro) {
-        this.terceiro = terceiro;
-    }
-
-    @Override
     public List<Itens> getItens() {
         return itens;
     }
 
     public void setItens(List<Itens> itens) {
         this.itens = itens;
+    }
+
+    @Override
+    public void validade() throws DaoException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

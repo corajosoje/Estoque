@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.jefferson.estoque.model.util;
+package br.com.jefferson.estoque.util;
 
-import br.com.jefferson.estoque.model.dao.DaoCliente;
-import br.com.jefferson.estoque.model.dao.DaoInterface;
+import br.com.jefferson.estoque.model.dao.*;
+import br.com.jefferson.estoque.model.util.JPAConfiguration;
 import br.jefferson.exeptions.DaoException;
 import br.jefferson.validators.CpfCnpj;
 import java.text.SimpleDateFormat;
@@ -22,7 +22,9 @@ public class ObjectFactory extends br.jefferson.util.ObjectFactory {
     //private ObjectFactory factory = br.com.jefferson.estoque.model.util.ObjectFactory.getInstance();
     public static final SimpleDateFormat UTC = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
     public static final SimpleDateFormat dataSimples = new SimpleDateFormat("dd/MM/yyyy");
-    public static final DaoCliente _DaoCliente = new DaoCliente();
+    public static final DaoCliente DaoCliente = new DaoCliente();
+    public static final DaoTerceiro DaoTerceiro = new DaoTerceiro();
+    public static final DaoSku DaoSku = new DaoSku();
     private static ObjectFactory facotory = null;
     public static final CpfCnpj validadorCNPJ = new CpfCnpj();
 
@@ -37,16 +39,14 @@ public class ObjectFactory extends br.jefferson.util.ObjectFactory {
         return validadorCNPJ;
     }
 
-    public EntityManager getNewManager() throws DaoException {
+    public static EntityManager getNewManager() throws DaoException {
         return JPAConfiguration.getEntityManager();
     }
 
-    public org.apache.logging.log4j.Logger getLogger(Object classe) {
+    public static org.apache.logging.log4j.Logger getLogger(Object classe) {
         return LogManager.getLogger(classe.getClass().getName());
     }
 
-    public DaoCliente getDaoCliente() {
-        return _DaoCliente;
-    }
+   
 
 }
